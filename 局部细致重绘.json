@@ -1,0 +1,1158 @@
+{
+  "last_node_id": 204,
+  "last_link_id": 455,
+  "nodes": [
+    {
+      "id": 179,
+      "type": "DualCLIPLoader",
+      "pos": [
+        -666.27099609375,
+        332.62249755859375
+      ],
+      "size": [
+        315,
+        106
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "label": "CLIP",
+          "type": "CLIP",
+          "links": [
+            410,
+            411,
+            441
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DualCLIPLoader"
+      },
+      "widgets_values": [
+        "t5xxl_fp8_e4m3fn.safetensors",
+        "clip_l.safetensors",
+        "flux",
+        "default"
+      ]
+    },
+    {
+      "id": 178,
+      "type": "UNETLoader",
+      "pos": [
+        -666.27099609375,
+        209.33233642578125
+      ],
+      "size": [
+        315,
+        82
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "label": "模型",
+          "type": "MODEL",
+          "links": [
+            390
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "flux1-schnell-fp8.safetensors",
+        "fp8_e4m3fn"
+      ]
+    },
+    {
+      "id": 180,
+      "type": "ModelSamplingFlux",
+      "pos": [
+        -227.2510986328125,
+        207.5606689453125
+      ],
+      "size": [
+        315,
+        130
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "label": "模型",
+          "type": "MODEL",
+          "link": 390
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "label": "模型",
+          "type": "MODEL",
+          "links": [
+            440
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelSamplingFlux"
+      },
+      "widgets_values": [
+        1.15,
+        0.5,
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": 182,
+      "type": "CLIPTextEncodeFlux",
+      "pos": [
+        -666.27099609375,
+        485.2410583496094
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "label": "CLIP",
+          "type": "CLIP",
+          "link": 410
+        },
+        {
+          "name": "clip_l",
+          "label": "CLIP_L",
+          "type": "STRING",
+          "widget": {
+            "name": "clip_l"
+          },
+          "link": 453
+        },
+        {
+          "name": "t5xxl",
+          "label": "T5XXL",
+          "type": "STRING",
+          "widget": {
+            "name": "t5xxl"
+          },
+          "link": 454
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "label": "条件",
+          "type": "CONDITIONING",
+          "links": [
+            444
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncodeFlux"
+      },
+      "widgets_values": [
+        "",
+        "",
+        3.5,
+        [
+          false,
+          true
+        ],
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 162,
+      "type": "GrowMaskWithBlur",
+      "pos": [
+        126.62455749511719,
+        634.484130859375
+      ],
+      "size": [
+        315,
+        246
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "label": "遮罩",
+          "type": "MASK",
+          "link": 363
+        }
+      ],
+      "outputs": [
+        {
+          "name": "mask",
+          "label": "遮罩",
+          "type": "MASK",
+          "links": [
+            365,
+            384
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "mask_inverted",
+          "label": "反转遮罩",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GrowMaskWithBlur"
+      },
+      "widgets_values": [
+        0,
+        0,
+        true,
+        false,
+        0,
+        1,
+        1,
+        false
+      ]
+    },
+    {
+      "id": 175,
+      "type": "MaskPreview+",
+      "pos": [
+        292.97320556640625,
+        953.4962768554688
+      ],
+      "size": [
+        210,
+        246
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "label": "遮罩",
+          "type": "MASK",
+          "link": 384
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "MaskPreview+"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 165,
+      "type": "InpaintCrop",
+      "pos": [
+        596.9652709960938,
+        372.1096496582031
+      ],
+      "size": [
+        443.4000244140625,
+        386
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "label": "图像",
+          "type": "IMAGE",
+          "link": 446
+        },
+        {
+          "name": "mask",
+          "label": "遮罩",
+          "type": "MASK",
+          "link": 365
+        },
+        {
+          "name": "optional_context_mask",
+          "label": "上下文遮罩(可选)",
+          "type": "MASK",
+          "shape": 7,
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "stitch",
+          "label": "接缝",
+          "type": "STITCH",
+          "links": null,
+          "slot_index": 0
+        },
+        {
+          "name": "cropped_image",
+          "type": "IMAGE",
+          "links": [],
+          "slot_index": 1
+        },
+        {
+          "name": "cropped_mask",
+          "type": "MASK",
+          "links": [
+            431
+          ],
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "InpaintCrop"
+      },
+      "widgets_values": [
+        20,
+        1,
+        true,
+        16,
+        false,
+        16,
+        "bicubic",
+        "ranged size",
+        1024,
+        1024,
+        1,
+        512,
+        512,
+        768,
+        768,
+        32
+      ]
+    },
+    {
+      "id": 187,
+      "type": "VAELoader",
+      "pos": [
+        618.8576049804688,
+        223.03945922851562
+      ],
+      "size": [
+        315,
+        58
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            442
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "ae.sft"
+      ]
+    },
+    {
+      "id": 196,
+      "type": "DetailerForEach",
+      "pos": [
+        1110.487060546875,
+        371.0505065917969
+      ],
+      "size": [
+        400,
+        673
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "label": "图像",
+          "type": "IMAGE",
+          "link": 439
+        },
+        {
+          "name": "segs",
+          "label": "Seg",
+          "type": "SEGS",
+          "link": 432
+        },
+        {
+          "name": "model",
+          "label": "模型",
+          "type": "MODEL",
+          "link": 440
+        },
+        {
+          "name": "clip",
+          "label": "CLIP",
+          "type": "CLIP",
+          "link": 441
+        },
+        {
+          "name": "vae",
+          "label": "VAE",
+          "type": "VAE",
+          "link": 442
+        },
+        {
+          "name": "positive",
+          "label": "正面条件",
+          "type": "CONDITIONING",
+          "link": 444
+        },
+        {
+          "name": "negative",
+          "label": "负面条件",
+          "type": "CONDITIONING",
+          "link": 445
+        },
+        {
+          "name": "detailer_hook",
+          "label": "细化约束",
+          "type": "DETAILER_HOOK",
+          "shape": 7,
+          "link": null
+        },
+        {
+          "name": "scheduler_func_opt",
+          "type": "SCHEDULER_FUNC",
+          "shape": 7,
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "links": [
+            433
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DetailerForEach"
+      },
+      "widgets_values": [
+        512,
+        true,
+        1024,
+        755023904143254,
+        "randomize",
+        8,
+        3.5,
+        "euler",
+        "simple",
+        0.5,
+        5,
+        true,
+        true,
+        "",
+        1,
+        false,
+        20,
+        false,
+        false,
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 198,
+      "type": "MaskToSEGS",
+      "pos": [
+        722.075927734375,
+        810.9103393554688
+      ],
+      "size": [
+        315,
+        154
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "label": "遮罩",
+          "type": "MASK",
+          "link": 431
+        }
+      ],
+      "outputs": [
+        {
+          "name": "SEGS",
+          "label": "Seg",
+          "type": "SEGS",
+          "links": [
+            432
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MaskToSEGS"
+      },
+      "widgets_values": [
+        false,
+        3,
+        false,
+        10,
+        false
+      ]
+    },
+    {
+      "id": 174,
+      "type": "MaskPreview+",
+      "pos": [
+        -208.985595703125,
+        908.880126953125
+      ],
+      "size": [
+        210,
+        246
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "label": "遮罩",
+          "type": "MASK",
+          "link": 383
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "MaskPreview+"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 163,
+      "type": "InpaintResize",
+      "pos": [
+        114.16312408447266,
+        373.20654296875
+      ],
+      "size": [
+        430.8000183105469,
+        194
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "label": "图像",
+          "type": "IMAGE",
+          "link": 361
+        },
+        {
+          "name": "mask",
+          "label": "遮罩",
+          "type": "MASK",
+          "link": 362
+        },
+        {
+          "name": "optional_context_mask",
+          "label": "上下文遮罩(可选)",
+          "type": "MASK",
+          "shape": 7,
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "label": "图像",
+          "type": "IMAGE",
+          "links": [
+            446
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "mask",
+          "label": "遮罩",
+          "type": "MASK",
+          "links": [
+            363,
+            383
+          ],
+          "slot_index": 1
+        },
+        {
+          "name": "context_mask",
+          "label": "上下文遮罩",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "InpaintResize"
+      },
+      "widgets_values": [
+        "bicubic",
+        "ensure minimum size",
+        1024,
+        1024,
+        1
+      ]
+    },
+    {
+      "id": 201,
+      "type": "Note",
+      "pos": [
+        -227.6507568359375,
+        798.4907836914062
+      ],
+      "size": [
+        310.1324462890625,
+        58
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "segment中的提示词为所需要细化的部位"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 161,
+      "type": "LayerMask: SegmentAnythingUltra V2",
+      "pos": [
+        -233.3809814453125,
+        398.0854187011719
+      ],
+      "size": [
+        315,
+        366
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "label": "图像",
+          "type": "IMAGE",
+          "link": 382
+        },
+        {
+          "name": "prompt",
+          "label": "提示词",
+          "type": "STRING",
+          "widget": {
+            "name": "prompt"
+          },
+          "link": 455
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "label": "图像",
+          "type": "IMAGE",
+          "links": [
+            361
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "mask",
+          "label": "遮罩",
+          "type": "MASK",
+          "links": [
+            362
+          ],
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LayerMask: SegmentAnythingUltra V2"
+      },
+      "widgets_values": [
+        "sam_vit_h (2.56GB)",
+        "GroundingDINO_SwinT_OGC (694MB)",
+        0.3,
+        "VITMatte",
+        6,
+        6,
+        0.15,
+        0.99,
+        true,
+        "eyes",
+        "cuda",
+        2,
+        false
+      ],
+      "color": "rgba(27, 80, 119, 0.7)"
+    },
+    {
+      "id": 190,
+      "type": "CLIPTextEncode",
+      "pos": [
+        -666.27099609375,
+        973.2554931640625
+      ],
+      "size": [
+        334.6520080566406,
+        142.40199279785156
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "label": "CLIP",
+          "type": "CLIP",
+          "link": 411
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "label": "条件",
+          "type": "CONDITIONING",
+          "links": [
+            445
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "bad",
+        [
+          false,
+          true
+        ]
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 203,
+      "type": "ArgosTranslateTextNode",
+      "pos": [
+        -670.2308349609375,
+        737.3703002929688
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "text",
+          "label": "文本",
+          "type": "STRING",
+          "links": [
+            453,
+            454
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ArgosTranslateTextNode"
+      },
+      "widgets_values": [
+        "chinese",
+        "english",
+        "",
+        [
+          false,
+          true
+        ]
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 204,
+      "type": "ArgosTranslateTextNode",
+      "pos": [
+        -1150.931884765625,
+        93.85955047607422
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "text",
+          "label": "文本",
+          "type": "STRING",
+          "links": [
+            455
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ArgosTranslateTextNode"
+      },
+      "widgets_values": [
+        "chinese",
+        "english",
+        "hand",
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 173,
+      "type": "LoadImage",
+      "pos": [
+        -1293.432373046875,
+        353.7169494628906
+      ],
+      "size": [
+        511.8204345703125,
+        389.9999694824219
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "links": [
+            382,
+            439
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "links": [],
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "00463-204620417.jpg",
+        "image"
+      ]
+    },
+    {
+      "id": 199,
+      "type": "PreviewImage",
+      "pos": [
+        -1292.0235595703125,
+        784.2022094726562
+      ],
+      "size": [
+        514.96337890625,
+        483.4327392578125
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "label": "图像",
+          "type": "IMAGE",
+          "link": 433
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    }
+  ],
+  "links": [
+    [
+      361,
+      161,
+      0,
+      163,
+      0,
+      "IMAGE"
+    ],
+    [
+      362,
+      161,
+      1,
+      163,
+      1,
+      "MASK"
+    ],
+    [
+      363,
+      163,
+      1,
+      162,
+      0,
+      "MASK"
+    ],
+    [
+      365,
+      162,
+      0,
+      165,
+      1,
+      "MASK"
+    ],
+    [
+      382,
+      173,
+      0,
+      161,
+      0,
+      "IMAGE"
+    ],
+    [
+      383,
+      163,
+      1,
+      174,
+      0,
+      "MASK"
+    ],
+    [
+      384,
+      162,
+      0,
+      175,
+      0,
+      "MASK"
+    ],
+    [
+      390,
+      178,
+      0,
+      180,
+      0,
+      "MODEL"
+    ],
+    [
+      410,
+      179,
+      0,
+      182,
+      0,
+      "CLIP"
+    ],
+    [
+      411,
+      179,
+      0,
+      190,
+      0,
+      "CLIP"
+    ],
+    [
+      431,
+      165,
+      2,
+      198,
+      0,
+      "MASK"
+    ],
+    [
+      432,
+      198,
+      0,
+      196,
+      1,
+      "SEGS"
+    ],
+    [
+      433,
+      196,
+      0,
+      199,
+      0,
+      "IMAGE"
+    ],
+    [
+      439,
+      173,
+      0,
+      196,
+      0,
+      "IMAGE"
+    ],
+    [
+      440,
+      180,
+      0,
+      196,
+      2,
+      "MODEL"
+    ],
+    [
+      441,
+      179,
+      0,
+      196,
+      3,
+      "CLIP"
+    ],
+    [
+      442,
+      187,
+      0,
+      196,
+      4,
+      "VAE"
+    ],
+    [
+      444,
+      182,
+      0,
+      196,
+      5,
+      "CONDITIONING"
+    ],
+    [
+      445,
+      190,
+      0,
+      196,
+      6,
+      "CONDITIONING"
+    ],
+    [
+      446,
+      163,
+      0,
+      165,
+      0,
+      "IMAGE"
+    ],
+    [
+      453,
+      203,
+      0,
+      182,
+      1,
+      "STRING"
+    ],
+    [
+      454,
+      203,
+      0,
+      182,
+      2,
+      "STRING"
+    ],
+    [
+      455,
+      204,
+      0,
+      161,
+      1,
+      "STRING"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 4,
+      "title": "局部重绘细化",
+      "bounding": [
+        -677.5216064453125,
+        128.3529815673828,
+        2199.73583984375,
+        1085.4986572265625
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.4090909090909095,
+      "offset": [
+        2119.4882003250364,
+        249.82981562759934
+      ]
+    },
+    "node_versions": {
+      "comfy-core": "0.3.15",
+      "comfyui-KJNodes": "095c8d4b526ba3c1f12fd9dd1d7f3540c6a11358",
+      "comfyui_essentials": "33ff89fd354d8ec3ab6affb605a79a931b445d99",
+      "comfyui-inpaint-cropandstitch": "2ea5d1f0207caefae97b9d1c14f4090ff0a3b515",
+      "ComfyUI-Impact-Pack": "c6056b132d7e155c3ece42b77e08ea45bde1bfef",
+      "ComfyUI_LayerStyle_Advance": "unknown",
+      "ComfyUI_Custom_Nodes_AlekPet": "42d420b8854d4cf4aeed3408c10365ffc36b07d8"
+    },
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true,
+    "ue_links": []
+  },
+  "version": 0.4
+}
